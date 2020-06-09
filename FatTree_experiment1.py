@@ -6,116 +6,140 @@ from mininet.cli  import CLI
 from mininet.log  import setLogLevel, info
 from mininet.link import TCLink, Intf
 from subprocess   import call
-def myNetwork():
-    net = Mininet( topo=None,
-                   build=False,
-                   ipBase='10.0.0.0/8')
+def myNetWork() :
+    net = Mininet( topo = None,
+                   build = False,
+                   ipBase = '10.0.0.0/8')
+    info('*** Adding controller \n')
+    c0 = net.addController('c0',
+                                controller = RemoteController,
+                                ip = "192.168.17.128",
+                                protocol = 'tcp',
+                                port = 6633)
+
     info('*** Adding switches \n')
-    # 添加 core switches
-    core=[None]*2
-    aggregation=[None]*4
-    edge=[None]*4
-    cnt = int(0)
-    for i in range(2):
-        core[i]=[None]*2
-        for j in range(2):
-            core[i][j]=net.addSwitch('c%s'% cnt,cls=OVSKernelSwitch)
-            cnt += 1
-    # 添加 aggregation switches
-    cnt = 0
-    for i in range(4):
-       aggregation[i]=[None]*2
-       for j in range(2):
-            aggregation[i][j]=net.addSwitch('a%s'% cnt,cls=OVSKernelSwitch)
-            cnt += 1
-    # 添加 egde switches
-    cnt = 0
-    for i in range(4):
-        edge[i]=[None]*(2)
-        for j in range(2):
-            edge[i][j]=net.addSwitch('e%s'% cnt,cls=OVSKernelSwitch)
-            cnt += 1
-    # 添加链路 between core and aggregation switches
-    info('*** Adding links \n')
-    for i in range(2):
-         for j in range(2):
-             for l in range(k):
-                 net.addLink(core[i][j],aggregation[l][i]) 
-    # 添加链路 between aggregation and edge switches
-    for i in range(4):
-         for j in range(2):
-             for l in range(2):
-                 net.addLink(aggregation[i][j], edge[i][l])
-    # 添加hosts 和 链路
+    s1 = net.addSwitch('s1', cls = OVSKernelSwitch)
+    s2 = net.addSwitch('s2', cls = OVSKernelSwitch)
+    s3 = net.addSwitch('s3', cls = OVSKernelSwitch)
+    s4 = net.addSwitch('s4', cls = OVSKernelSwitch)
+    s5 = net.addSwitch('s5', cls = OVSKernelSwitch)
+    s6 = net.addSwitch('s6', cls = OVSKernelSwitch)
+    s7 = net.addSwitch('s7', cls = OVSKernelSwitch)
+    s8 = net.addSwitch('s8', cls = OVSKernelSwitch)
+    s9 = net.addSwitch('s9', cls = OVSKernelSwitch)
+    s10 = net.addSwitch('s10', cls = OVSKernelSwitch)
+    s11 = net.addSwitch('s11', cls = OVSKernelSwitch)
+    s12 = net.addSwitch('s12', cls = OVSKernelSwitch)
+    s13 = net.addSwitch('s13', cls = OVSKernelSwitch)
+    s14 = net.addSwitch('s14', cls = OVSKernelSwitch)
+    s15 = net.addSwitch('s15', cls = OVSKernelSwitch)
+    s16 = net.addSwitch('s16', cls = OVSKernelSwitch)
+    s17 = net.addSwitch('s17', cls = OVSKernelSwitch)
+    s18 = net.addSwitch('s18', cls = OVSKernelSwitch)
+    s19 = net.addSwitch('s19', cls = OVSKernelSwitch)
+    s20 = net.addSwitch('s20', cls = OVSKernelSwitch)
+
     info('*** Adding hosts \n')
-    cnt = 0
-    for i in range(4):
-        for j in range(2):
-             for l in range(2):
-                 host=net.addHost('h%s'% cnt,cls=Host,ip='10.%s.%s.%s'%(i,j,l+2),defaultRoute=None)
-                 net.addLink(edge[i][j],host)
-                 cnt += 1
-    info('***start network\n')
+    h1 = net.addHost('h1', cls=Host, ip='10.0.0.2', defaultRoute=None)
+    h2 = net.addHost('h2', cls=Host, ip='10.0.0.3', defaultRoute=None)
+    h3 = net.addHost('h3', cls=Host, ip='10.0.1.2', defaultRoute=None)
+    h4 = net.addHost('h4', cls=Host, ip='10.0.1.3', defaultRoute=None)
+    h5 = net.addHost('h5', cls=Host, ip='10.1.0.2', defaultRoute=None)
+    h6 = net.addHost('h6', cls=Host, ip='10.1.0.3', defaultRoute=None)
+    h7 = net.addHost('h7', cls=Host, ip='10.1.1.2', defaultRoute=None)
+    h8 = net.addHost('h8', cls=Host, ip='10.1.1.3', defaultRoute=None)
+    h9 = net.addHost('h9', cls=Host, ip='10.2.0.2', defaultRoute=None)
+    h10 = net.addHost('h10', cls=Host, ip='10.2.0.3', defaultRoute=None)
+    h11 = net.addHost('h11', cls=Host, ip='10.2.1.2', defaultRoute=None)
+    h12 = net.addHost('h12', cls=Host, ip='10.2.1.3', defaultRoute=None)
+    h13 = net.addHost('h13', cls=Host, ip='10.3.0.2', defaultRoute=None)
+    h14 = net.addHost('h14', cls=Host, ip='10.3.0.3', defaultRoute=None)
+    h15 = net.addHost('h15', cls=Host, ip='10.3.1.2', defaultRoute=None)
+    h16 = net.addHost('h16', cls=Host, ip='10.3.1.3', defaultRoute=None)
+
+    info('*** Adding links \n')
+    net.addLink(s1, h1)
+    net.addLink(s1, h2)
+    net.addLink(s2, h3)
+    net.addLink(s2, h4)
+    net.addLink(s3, h5)
+    net.addLink(s3, h6)
+    net.addLink(s4, h7)
+    net.addLink(s4, h8)
+    net.addLink(s5, h9)
+    net.addLink(s5, h10)
+    net.addLink(s6, h11)
+    net.addLink(s6, h12)
+    net.addLink(s7, h13)
+    net.addLink(s7, h14)
+    net.addLink(s8, h15)
+    net.addLink(s8, h16)
+    net.addLink(s9, s1)
+    net.addLink(s9, s2)
+    net.addLink(s10, s1)
+    net.addLink(s10, s2)
+    net.addLink(s11, s3)
+    net.addLink(s11, s4)
+    net.addLink(s12, s3)
+    net.addLink(s12, s4)
+    net.addLink(s13, s5)
+    net.addLink(s13, s6)
+    net.addLink(s14, s5)
+    net.addLink(s14, s6)
+    net.addLink(s15, s7)
+    net.addLink(s15, s8)
+    net.addLink(s16, s7)
+    net.addLink(s16, s8)
+    net.addLink(s17, s9)
+    net.addLink(s17, s11)
+    net.addLink(s17, s13)
+    net.addLink(s17, s15)
+    net.addLink(s18, s9)
+    net.addLink(s18, s11)
+    net.addLink(s18, s13)
+    net.addLink(s18, s15)
+    net.addLink(s19, s10)
+    net.addLink(s19, s12)
+    net.addLink(s19, s14)
+    net.addLink(s19, s16)
+    net.addLink(s20, s10)
+    net.addLink(s20, s12)
+    net.addLink(s20, s14)
+    net.addLink(s20, s16)
+
+    info('*** starting network \n')
     net.build()
-    info('***start controller\n')
-    for controller in net.controllers:
-         controller.start()
-         info('***start switches and allocate IP address\n')
-    cnt = 0
-    for i in range(2):
-         for j in range(2):
-             core[i][j].start([])
-             core[i][j].cmd('ifconfig c%s 10.%s.%s.%s'%(cnt,k,i+1,j+1))
-             cnt += 1
-    cnt = 0
-    for i in range(4):
-         for j in range(2):
-             aggregation[i][j].start([])
-             edge[i][j].start([])
-             aggregation[i][j].cmd('ifconfig a%s 10.%s.%s.1'%(cnt, i, j+2))
-             edge[i][j].cmd('ifconfig e%s 10.%s.%s.1'%(cnt, i, j))
-             cnt += 1
-    info('***Post configure swithces\n')
-    # 为core switches添加流表
-    cnt = 0
-    for i in range(2):
-        for j in range(2):
-            for pod in range(4):
-                core[i][j].cmd(r'ovs-ofctl add-flow c%s "dl_type=0x806,arp_tpa=10.%d.0.0/16,actions=output:%d"'%(cnt,pod,pod+1))
-                core[i][j].cmd(r'ovs-ofctl add-flow c%s "dl_type=0x800,nw_dst=10.%d.0.0/16,actions=output:%d"'%(cnt,pod,pod+1))
-        cnt += 1
-    # 为aggregation switches添加流表
-    cnt = 0
-    for i in range(4):
-        for j in range(2):
-            for switch in range(2):
-                   aggregation[i][j].cmd(r'ovs-ofctl add-flow a%s "dl_type=0x806,arp_tpa=10.%d.%d.0/24,actions=output:%d"'%(cnt,i,switch,switch+3))
-                   aggregation[i][j].cmd(r'ovs-ofctl add-flow a%s "dl_type=0x800,nw_dst=10.%d.%d.0/24,actions=output:%d"'%(cnt,i,switch,switch+3))
-            for pod in range(4):
-                   if(pod != i):
-                       for switch in range(2):
-                           for hid in range(2):
-                               aggregation[i][j].cmd(r'ovs-ofctl add-flow a%s "dl_type=0x806,arp_tpa=10.%d.%d.%d,actions=output:%d"'%(cnt, pod, switch, hid+2, (hid+j)%2+1))
-                               aggregation[i][j].cmd(r'ovs-ofctl add-flow a%s "dl_type=0x800,nw_dst=10.%d.%d.%d,actions=output:%d"'%(cnt, pod, switch, hid+2, (hid+j)%2+1))
-            cnt += 1
-     # 为edge switches添加流表
-    cnt = 0
-    for i in range(4):
-        for j in range(2):
-            for hid in range(2):
-                edge[i][j].cmd(r'ovs-ofctl add-flow e%s "dl_type=0x806,arp_tpa=10.%d.%d.%d,actions=output:%d"'%(cnt,i,j,hid+2,hid+2+1))
-                edge[i][j].cmd(r'ovs-ofctl add-flow e%s "dl_type=0x800,nw_dst=10.%d.%d.%d,actions=output:%d"'%(cnt,i,j,hid+2,hid+2+1))
-            for pod in range(k):
-                for switch in range(2):
-                    if(pod != i or switch != j):
-                        for hid in range(2):
-                            edge[i][j].cmd(r'ovs-ofctl add-flow e%s "dl_type=0x806,arp_tpa=10.%d.%d.%d,actions=output:%d"'%(cnt, pod, switch, hid+2, (hid+j)%2+1))
-                            edge[i][j].cmd(r'ovs-ofctl add-flow e%s "dl_type=0x800,nw_dst=10.%d.%d.%d,actions=output:%d"'%(cnt, pod, switch, hid+2, (hid+j)%2+1))
-            cnt += 1
-    info('*** Enable the Fat Tree \n')
+    info('*** starting controllers \n')
+    for controller in net.controllers :
+        controller.start()
+
+    info('*** starting switches \n')
+    net.get('s1').start([c0])
+    net.get('s2').start([c0])
+    net.get('s3').start([c0])
+    net.get('s4').start([c0])
+    net.get('s5').start([c0])
+    net.get('s6').start([c0])
+    net.get('s7').start([c0])
+    net.get('s8').start([c0])
+    net.get('s9').start([c0])
+    net.get('s10').start([c0])
+    net.get('s11').start([c0])
+    net.get('s12').start([c0])
+    net.get('s13').start([c0])
+    net.get('s14').start([c0])
+    net.get('s15').start([c0])
+    net.get('s16').start([c0])
+    net.get('s17').start([c0])
+    net.get('s18').start([c0])
+    net.get('s19').start([c0])
+    net.get('s20').start([c0])
+
+    info('*** Enable the fat Tree \n')
+
     CLI(net)
     net.stop()
 
-if __name__ == '__main__':
-    setLogLevel('info')
-    myNetwork()
+if __name__ == '__main__' :
+    setLogLevel( 'info' )
+    myNetWork()
